@@ -1,6 +1,8 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 from typing import Dict, List, Optional
 
+from PIL import Image
+
 import mmcv
 import numpy as np
 from mmengine.dist import master_only
@@ -112,8 +114,12 @@ class SegLocalVisualizer(Visualizer):
         for label, color in zip(labels, colors):
             mask[sem_seg[0] == label, :] = color
 
-        color_seg = (image * (1 - self.alpha) + mask * self.alpha).astype(
+        maskimg = Image.open('/media/kiki/hdd/Source/gov_proj/open_lab/sds_mask_01.png')
+        masked = mask * maskimg
+
+        color_seg = (image * (1 - self.alpha) + masked * self.alpha).astype(
             np.uint8)
+
         self.set_image(color_seg)
         return color_seg
 

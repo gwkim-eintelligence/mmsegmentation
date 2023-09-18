@@ -199,7 +199,13 @@ def show_result_pyplot(model: BaseSegmentor,
         alpha=opacity)
     visualizer.dataset_meta = dict(
         classes=model.dataset_meta['classes'],
-        palette=model.dataset_meta['palette'])
+        # palette=model.dataset_meta['palette']
+        palette=[[128, 64, 128], [0, 0, 0], [0, 0, 0], [0, 0, 0],
+                 [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0],
+                 [0, 0, 0], [0, 0, 0], [0, 0, 0],
+                 [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0],
+                 [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    )
     visualizer.add_datasample(
         name=title,
         image=image,

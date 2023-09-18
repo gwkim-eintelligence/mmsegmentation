@@ -2,6 +2,7 @@
 dataset_type = 'CityscapesDataset'
 data_root = 'data/cityscapes/'
 crop_size = (512, 1024)
+
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
@@ -21,7 +22,7 @@ test_pipeline = [
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
     dict(type='LoadAnnotations'),
-    dict(type='PackSegInputs')
+    dict(type='PackSegInputs'),
 ]
 img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
 tta_pipeline = [

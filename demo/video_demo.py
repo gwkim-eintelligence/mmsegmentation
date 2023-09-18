@@ -52,8 +52,10 @@ def main():
     assert args.show or args.output_file, \
         'At least one output should be enabled.'
 
+    checkpoint = args.checkpoint
+
     # build the model from a config file and a checkpoint file
-    model = init_model(args.config, args.checkpoint, device=args.device)
+    model = init_model(args.config, checkpoint, device=args.device)
     if args.device == 'cpu':
         model = revert_sync_batchnorm(model)
 
@@ -87,14 +89,17 @@ def main():
             if not flag:
                 break
 
+            frame = cv2.GaussianBlur(frame, (5,5), 1)
+
             # test a single image
             result = inference_model(model, frame)
 
             # blend raw image and prediction
-            draw_img = show_result_pyplot(model, frame, result)
+            draw_img = show_result_pyplot(model, frame, result, show=False)
 
             if args.show:
-                cv2.imshow('video_demo', draw_img)
+                show_draw_img = cv2.resize(draw_img, dsize=(0, 0), fx=0.5, fy=0.5)
+                cv2.imshow('video_demo', show_draw_img)
                 cv2.waitKey(args.show_wait_time)
             if writer:
                 if draw_img.shape[0] != output_height or draw_img.shape[
